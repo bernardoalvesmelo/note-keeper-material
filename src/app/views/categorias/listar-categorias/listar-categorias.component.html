@@ -3,7 +3,7 @@
     <h1>Listar Categorias</h1>
 
     <button routerLink="/categorias/inserir" mat-raised-button 
-    class="me-auto py-4 px-5 fs-6"> Nova Categoria</button>
+    class="me-auto py-4 px-5 fs-6"> Nova Categoria </button>
 
     <div class="row gap-3">
       <mat-card *ngFor="let categoria of categorias$ | async" 

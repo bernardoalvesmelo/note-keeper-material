@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Categoria } from '../models/categoria';
 import { CategoriaService } from '../services/categorias.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -26,11 +26,9 @@ export class EditarCategoriaComponent {
       titulo: [''],
     });
 
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!);
+    this.categoria$ = this.route.data.pipe(map(res => res['categoria']));
 
-    this.categoria$ = this.categoriaService.selecionarPorId(id);
-    
-    this.categoria$ .subscribe({
+    this.categoria$.subscribe({
       next: (res) => this.form?.patchValue(res),
       error: (err) => this.processarFalha(err)
     });

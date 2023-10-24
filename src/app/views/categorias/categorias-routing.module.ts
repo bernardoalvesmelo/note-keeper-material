@@ -1,10 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule, inject } from '@angular/core';
+import { ActivatedRouteSnapshot, ResolveFn, RouterModule, Routes } from '@angular/router';
 import { ListarCategoriasComponent } from './listar-categorias/listar-categorias.component';
 import { InserirCategoriaComponent } from './inserir-categoria/inserir-categoria.component';
 import { EditarCategoriaComponent } from './editar-categoria/editar-categoria.component';
 import { ExcluirCategoriaComponent } from './excluir-categoria/excluir-categoria.component';
+import { Categoria } from './models/categoria';
+import { CategoriaService } from './services/categorias.service';
 
+const listarCategoriasResolver: ResolveFn<Categoria[]> = () => {
+  return inject(CategoriaService).selecionarTodos();
+};
+
+const selecionarCategoriaResolver: ResolveFn<Categoria> = (route: ActivatedRouteSnapshot) => {
+  return inject(CategoriaService).selecionarPorId(parseInt(route.paramMap.get('id')!));
+};
 
 const routes: Routes = [
   {
@@ -14,15 +23,22 @@ const routes: Routes = [
   },
   {
     path: 'listar',
-    component: ListarCategoriasComponent
+    component: ListarCategoriasComponent,
+    resolve: {categorias: listarCategoriasResolver}
+  },
+  {
+    path: 'inserir',
+    component: InserirCategoriaComponent
   },
   {
     path: 'editar/:id',
-    component: EditarCategoriaComponent
+    component: EditarCategoriaComponent,
+    resolve: {categoria: selecionarCategoriaResolver}
   },
   {
     path: 'excluir/:id',
-    component: ExcluirCategoriaComponent
+    component: ExcluirCategoriaComponent,
+    resolve: {categoria: selecionarCategoriaResolver}
   }
 ];
 
