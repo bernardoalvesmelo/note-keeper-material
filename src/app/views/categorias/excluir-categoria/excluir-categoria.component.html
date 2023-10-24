@@ -1,0 +1,37 @@
+<div class="row justify-content-center align-items-center mt-5">
+  <div *ngIf="categoria$ | async as categoria" class="col-md-5">
+    <h1 class="fs-2">Excluir Categoria</h1>
+
+    <p class="fs-5">
+      Você tem certeza que deseja excluir a seguinte categoria?
+    </p>
+
+    <mat-list>
+      <mat-list-item>
+        <div class="d-flex justify-content-between">
+          <span>Título:</span>
+          <span>{{categoria.titulo}}</span>
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+
+    <div class="d-flex justify-content-end gap-2 mt-5">
+      <button 
+        (click)="excluirCategoria()"
+        class="py-3 px-5" 
+        color="warn" 
+        mat-raised-button>
+        Confirmar
+      </button>
+      <button
+        routerLink="/categorias/listar"
+        class="py-3 px-5"
+        color="primary"
+        mat-stroked-button
+      >
+        Voltar
+      </button>
+    </div>
+  </div>
+</div>
