@@ -6,10 +6,7 @@ import { EditarCategoriaComponent } from './editar-categoria/editar-categoria.co
 import { ExcluirCategoriaComponent } from './excluir-categoria/excluir-categoria.component';
 import { Categoria } from './models/categoria';
 import { CategoriaService } from './services/categorias.service';
-
-const listarCategoriasResolver: ResolveFn<Categoria[]> = () => {
-  return inject(CategoriaService).selecionarTodos();
-};
+import { listarCategoriasResolver } from './services/listar-categorias.resolver';
 
 const selecionarCategoriaResolver: ResolveFn<Categoria> = (route: ActivatedRouteSnapshot) => {
   return inject(CategoriaService).selecionarPorId(parseInt(route.paramMap.get('id')!));

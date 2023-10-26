@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CategoriaService } from '../services/categorias.service';
 import { Categoria } from '../models/categoria';
+import { NotificationService } from 'src/app/core/notification/services/notification.service';
 
 @Component({
   selector: 'app-inserir-categoria',
@@ -15,6 +16,7 @@ export class InserirCategoriaComponent implements OnInit{
   constructor(
     private fb: FormBuilder, 
     private categoriasService: CategoriaService, 
+    private notificationService: NotificationService,
     private router: Router) {}
  
   ngOnInit(): void {
@@ -32,10 +34,16 @@ export class InserirCategoriaComponent implements OnInit{
   }
 
   processarSucesso(res: Categoria) {
+    this.notificationService
+      .sucesso(`Categoria ${res.titulo} cadastrada com sucesso`);
+
     this.router.navigate(['/categorias','listar']);
   }
 
   processarFalha(err: any) {
+    this.notificationService
+      .sucesso(`${err}`);
+
     console.error('Erro', err);
   }
 }
